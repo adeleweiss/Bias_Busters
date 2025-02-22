@@ -3,6 +3,7 @@ from flask_cors import CORS
 import newspaper
 from textblob import TextBlob
 import pickle
+from nltk.sentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
 CORS(app)
@@ -22,7 +23,6 @@ def analyze_sentiment(title_text_scores):
         total_sentiment = "Very Negative"
     return total_sentiment, total_score
 
-from nltk.sentiment import SentimentIntensityAnalyzer
 sia = SentimentIntensityAnalyzer()
 
 def analyze_sentiment_vader(texts):
