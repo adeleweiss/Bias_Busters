@@ -1,25 +1,28 @@
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 import pickle
 
 # Load dataset
 df = pd.read_csv("1/Political_Bias.csv")
 
-df = df.dropna(subset=['Text'])
+# Drop rows with missing values
+df = df.dropna(subset=['Text', 'Bias'])
 
-tfidf_vectorizer = TfidfVectorizer()
-# Prepare features and labels
+print(df['Bias'].value_counts())  # Check class balance
+
+# TF-IDF Vectorization
+tfidf_vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_df=0.85, min_df=5, stop_words='english')
 X = tfidf_vectorizer.fit_transform(df['Text'])
 y = df['Bias']
 
-# Split data
+# Split data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-# Train the model
-model = LogisticRegression(max_iter=1000)
+# Train Random Forest model
+model = RandomForestClassifier(n_estimators=200, max_depth=20, random_state=42, class_weight='balanced')
 model.fit(X_train, y_train)
 
 # Evaluate model
