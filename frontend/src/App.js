@@ -6,9 +6,6 @@ import Home from './Home'
 function App() {
   return (
       <Router>
-          <nav>
-              <Link to="/">Home</Link> 
-          </nav>
           <Routes>
               <Route path="/" element={<Home />} />
           </Routes>
