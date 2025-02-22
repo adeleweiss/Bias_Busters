@@ -4,9 +4,13 @@ import newspaper
 from textblob import TextBlob
 import pickle
 from nltk.sentiment import SentimentIntensityAnalyzer
+<<<<<<< Updated upstream
+=======
+from flask_cors import cross_origin
+>>>>>>> Stashed changes
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["http://localhost:3000"])
 
 # Sentiment Analysis function
 def analyze_sentiment(title_text_scores):
