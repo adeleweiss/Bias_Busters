@@ -74,6 +74,7 @@ def analyze_article():
     article = newspaper.Article(url, language='en')
     article.download()
     article.parse()
+    article.nlp()
 
     # Extract article details
     article_data = {
@@ -108,6 +109,7 @@ def analyze_article():
     return jsonify({
         "title": article_data["title"],
         "published_date": article_data["published_date"],
+        "keywords": article_data["keywords"],
         "title_sentiment": title_score,
         "text_sentiment": text_score,
         "total_sentiment": total_sentiment,
