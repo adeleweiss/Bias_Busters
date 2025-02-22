@@ -1,10 +1,30 @@
+
 .title{
     text-align: center;
+    margin-top:1em;
     font-family: "Times New Roman", Times, serif;
     font-size: clamp(4rem,8vw,8rem);
     font-weight: 1000;
     color: white;
+    margin-bottom:0;
 }
+
+.subtitle{
+    margin-top:0;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(1.25rem,2vw,2rem);
+    font-weight: 900;
+    color: white;
+}
+
+.description{
+    color:white;
+    margin-right: 4em;
+    margin-left:4em;
+    font-family: "Times New Roman", Times, serif;
+}
+
 
 .fullscreen-section {
     height: 100vh; /* Full viewport height */
@@ -18,16 +38,26 @@
 }
 
 button{
-    height:2em;
-    width:clamp(10rem,16vw,16rem);
     font-size:clamp(1rem,1.5vw,1.5rem);
-}
+    margin-right: 2em;
+    width:clamp(11rem,12vw,12em);
+    margin-top:2em;
+} 
 
-input{
+.input{
     padding-left: 1em;
     margin-left: 1em;
-    margin-top: 1em;
-    height:2em;
+    margin-top: 2em;
+    height:2.5em;
     width:clamp(20rem,25vw,25rem);
     font-size:clamp(1rem,1.5vw,1.5rem);
+    border-radius:0.25em;
+}
+
+.resultsIndicator{
+    color:white;
+    font-family: "Times New Roman", Times, serif;
+    align-items: center;
+    position: fixed;
+    bottom: 2em;
 }
