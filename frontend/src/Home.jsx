@@ -2,6 +2,7 @@ import './Home.css';
 import { motion } from "framer-motion";
 import { useState } from 'react';
 import { Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from './article_card';
 
@@ -9,6 +10,7 @@ function Home() {
     const [url, setUrl] = useState("");
     const [keyword, setKeyword] = useState("");
     const [results, setResults] = useState([]);
+    const navigate = useNavigate();
 
     const handleSubmitUrl = async (e) => {
         e.preventDefault();
@@ -21,7 +23,7 @@ function Home() {
             });
             const data = await response.json();
             console.log(data);
-            
+            navigate('/results', { state: { data: data } });
         } catch (er) {
             console.log("Error fetching data:", er);
         }
@@ -156,7 +158,13 @@ function Home() {
             {results.length !== 0 && 
             <div>
                 {results.map(article =>{
-                    return <Card props={article}/>
+                    return <motion.div 
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 , delay: 0.5}}
+                    key={article.title}>
+                    <Card props={article}/>
+                    </motion.div>
                 })}
             </div>
             }
