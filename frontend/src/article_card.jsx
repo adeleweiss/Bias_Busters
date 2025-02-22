@@ -7,22 +7,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  * @param {*} data includes whatever is given by then
  */
 function articleCard(data){
-
-    return 
-    <>
-        <div class="card">
+    console.log(data)
+    return  <>
+        <div className="card">
             <Row>
-                <p>{data.title}</p>
+                <p>{data.props.title}</p>
             </Row>
             <Row>
-                <p>{data.description}</p>
+                <p>{data.props.description}</p>
             </Row>
             <Row>
                 <Col>
-                    <p>{data.source.name}</p>
+                    <p>{data.props.source.name}</p>
                 </Col>
                 <Col>
-                    <p>{data.author[0]}</p>
+                    <p>{data.props.author}</p>
                 </Col>
             </Row>
         </div>
