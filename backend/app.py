@@ -4,6 +4,7 @@ import newspaper
 from textblob import TextBlob
 import pickle
 from nltk.sentiment import SentimentIntensityAnalyzer
+from flask_cors import cross_origin
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
