@@ -109,6 +109,7 @@ def analyze_article():
     return jsonify({
         "title": article_data["title"],
         "published_date": article_data["published_date"],
+        "authors": article_data["authors"],
         "keywords": article_data["keywords"],
         "title_sentiment": title_score,
         "text_sentiment": text_score,
