@@ -11,7 +11,20 @@ function articleCard(data){
     return 
     <>
         <div class="card">
-            
+            <Row>
+                <p>{data.title}</p>
+            </Row>
+            <Row>
+                <p>{data.description}</p>
+            </Row>
+            <Row>
+                <Col>
+                    <p>{data.source.name}</p>
+                </Col>
+                <Col>
+                    <p>{data.author[0]}</p>
+                </Col>
+            </Row>
         </div>
     </>
 
