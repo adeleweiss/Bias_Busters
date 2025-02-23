@@ -37,19 +37,18 @@
     text-align: center;
 }
 
-button{
+.subButtons{
     font-size:clamp(1rem,1.5vw,1.5rem);
     margin-right: 2em;
     width:clamp(11rem,12vw,12em);
-    margin-top:2em;
+    margin-top:0em!important;
 } 
 
-.input{
+.textbox-input{
     padding-left: 1em;
-    margin-left: 1em;
     margin-top: 2em;
     height:2.5em;
-    width:clamp(20rem,25vw,25rem);
+    width:clamp(15rem,50vw,30rem);
     font-size:clamp(1rem,1.5vw,1.5rem);
     border-radius:0.25em;
 }
@@ -60,4 +59,8 @@ button{
     align-items: center;
     position: fixed;
     bottom: 2em;
+}
+
+.card{
+    margin:2em;
 }

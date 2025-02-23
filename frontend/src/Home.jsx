@@ -1,15 +1,17 @@
 import './Home.css';
 import { motion } from "framer-motion";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Card from './article_card';
+import Card from './ArticleCard';
+import ArticleContext from './ArticleContext';
 
 function Home() {
     const [url, setUrl] = useState("");
     const [keyword, setKeyword] = useState("");
     const [results, setResults] = useState([]);
+    const [data, setData] = useContext(ArticleContext);
     const navigate = useNavigate();
 
     const handleSubmitUrl = async (e) => {
@@ -22,8 +24,24 @@ function Home() {
                 }
             });
             const data = await response.json();
-            console.log(data);
-            navigate('/results', { state: { data: data } });
+            setData(data);
+            navigate('/results');
+        } catch (er) {
+            console.log("Error fetching data:", er);
+        }
+    };
+
+    const handleSubmitKeyUrl = async (e) => {
+        try{
+            const response = await fetch(`http://127.0.0.1:8000/api/analyze?url=${e}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const data = await response.json();
+            setData(data);
+            navigate('/results');
         } catch (er) {
             console.log("Error fetching data:", er);
         }
@@ -38,7 +56,6 @@ function Home() {
         setResults(json.articles);
     };
 
-    console.log(results)
     return (
         <>
             <div className="fullscreen-section">
@@ -90,7 +107,8 @@ function Home() {
                                 <Button
                                         variant="light"
                                         type="submit"
-                                        disabled={keyword}>
+                                        disabled={keyword}
+                                        className="subButtons">
                                         Search By URL
                                     </Button>
                                 <input
@@ -99,7 +117,7 @@ function Home() {
                                     onChange={(e) => setUrl(e.target.value)}
                                     placeholder="Enter a URL..."
                                     required
-                                    className="input"
+                                    className="textbox-input"
                                     disabled={keyword}
                                 />
                                 
@@ -121,7 +139,8 @@ function Home() {
                                         variant="light"
                                         type="submit"
                                         onSubmit={(e) => handleSubmitUrl(e)}
-                                        disabled={url}>
+                                        disabled={url}
+                                        className="subButtons">
                                         Search By Keyword
                                     </Button>
                                 <input
@@ -130,7 +149,7 @@ function Home() {
                                     onChange={(e) => setKeyword(e.target.value)}
                                     placeholder="Enter a Keyword..."
                                     required
-                                    className="input"
+                                    className="textbox-input"
                                     disabled={url}
                                 />
                                 
@@ -158,12 +177,12 @@ function Home() {
             {results.length !== 0 && 
             <div>
                 {results.map(article =>{
-                    return <motion.div 
+                    return <motion.div onClick={() => handleSubmitKeyUrl(article.url)}
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 , delay: 0.5}}
                     key={article.title}>
-                    <Card props={article}/>
+                    <Card className="card" props={article}/>
                     </motion.div>
                 })}
             </div>

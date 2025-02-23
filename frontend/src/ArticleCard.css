@@ -1,11 +1,20 @@
 .card{
+    font-family: "Times New Roman", Times, serif;
     margin-left: 3em;
     margin-right: 3em;
     border-radius: 4px;
     text-overflow: hidden;
-    background-color: #D9D9D9;
-    height: 216px;
+    background-color: #f5f4f4;
+    box-shadow: 0.5em 0.5em 0.5em rgb(226, 226, 226);
+    height: auto;
+    padding: 1em;
     gap: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    cursor:pointer;
 }
 
 .card_all_text{
@@ -14,10 +23,10 @@
 
 .card_photo{
     /* height: 100px; */
-    padding: 10%;
     align-items: center;
     justify-content: center;
     width: 100%;
+    border: 1px, solid, black;
 }
 
 .card_title{
@@ -45,12 +54,12 @@
 }
 
 .card_bottom_content{
-    margin-left: 5px;
-    padding-right: 5px;
+    position:absolute;
+    bottom:10px;
 }
 
 .source_name{
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .card_date{
