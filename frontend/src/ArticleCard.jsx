@@ -8,43 +8,50 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  * @param {*} data includes whatever is given by then
  */
 function articleCard(data){
-    const publishedDate = new Date(data.props.publishedAt);
+    var publishedDate;
+    if(data.props.publishedAt){
+        publishedDate = new Date(data.props.publishedAt);
+    } else {
+        publishedDate = new Date(data.props.published_date);
+    }
+    
     //const formattedDate = publishedDate.toISOString().split("T")[0];
     //console.log(formattedDate);
     console.log(data)
-    if(data.props.urlToImage == undefined){
-        return;
-    }
 
-    return  <Card>
-        <div>
-            <Row>
-                <Col xs={8} className="card_all_text">
+    return  <Card>            
+                <div className="card_all_text">
+                <Row>
                     <p className="card_title">{data.props.title}</p>
-                    <p className="card_description">{data.props.description}</p>
-                    <Row className="card_bottom_content">
-                        <Col>
+                </Row>
+                <Row className="justify-content-center">
+                   {data.props.description && <p className="card_description">{data.props.description}</p>}
+                </Row>
+                   <Row className="card_bottom_content">
+                        {data.props.source && <Col>
                             <a className="source_name" href={data.props.url} target="_blank">
                                 <Button>
                                     {data.props.source.name}
                                 </Button>
                             </a>     
-                        </Col>
-                        <Col>
+                        </Col>}
+                        {data.props.author && <Col>
                             <p className="author">{data.props.author}</p>
-                        </Col>
+                        </Col>}
+                        {data.props.authors && <Col>
+                            <p className="author">{data.props.authors[0]}</p>
+                        </Col>}
                         <Col>
                             <p className="card_date">{publishedDate.toISOString().split("T")[0]}</p>
                         </Col>
-                    </Row>
-                </Col>
-                <Col xs={4}>
-                    <Image className="card_photo" src={data.props.urlToImage}></Image>
-                </Col>
+                    
+                    
                 
-            </Row>
-            
-        </div>
+                {data.props.urlToImage && <Col xs={4}>
+                    <Image className="card_photo" src={data.props.urlToImage}></Image>
+                </Col>}
+                </Row>
+                </div>
     </Card>
 
 }

@@ -54,8 +54,7 @@
 }
 
 .card_bottom_content{
-    position:absolute;
-    bottom:10px;
+   vertical-align: text-bottom;
 }
 
 .source_name{
