@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from './ArticleCard';
 import ArticleContext from './ArticleContext';
 import NavBar from './NavBar';
+import { useCallback } from 'react';
 
 function Home() {
     const [url, setUrl] = useState("");
@@ -15,6 +16,9 @@ function Home() {
     const [data, setData] = useContext(ArticleContext);
     const [showButton, setShowButton] = useState(false);
     const navigate = useNavigate();
+
+    const [choiceWord, setChoiceWord] = useState("");
+    const choiceWordArray = ["U.S", "World", "Health", "Buisness", "Art", "Sports", "Politics"]
 
     const handleSubmitUrl = async (e) => {
         e.preventDefault();
@@ -81,6 +85,11 @@ function Home() {
           behavior: "smooth",
         });
       };
+
+    const handleUpdateKeyWordFromChoice = useCallback((givenWord) => {
+        setKeyword(givenWord);
+        handleSubmitKeyWord();
+    });
 
     return (
         <>
@@ -183,6 +192,13 @@ function Home() {
                             </form>
                         </motion.div>
                     </Col>
+                    <div>
+                        {choiceWordArray.map(word => (
+                            <Button className="w-auto px-2" key={word} 
+                                onClick={() => handleUpdateKeyWordFromChoice(word)}
+                            >{word}</Button>
+                        ))}
+                    </div>
                 {results.length !== 0 && (
                 <motion.div 
                     className='resultsIndicator '

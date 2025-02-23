@@ -5,6 +5,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 import "./Results.css";
 import { useNavigate } from 'react-router-dom';
 import ArticleContext from './ArticleContext';
+import NavBar from "./NavBar";
 
 const Results = () => {
     const [data, setData] = useContext(ArticleContext);
@@ -96,7 +97,8 @@ const Results = () => {
         url: score.url,           // URL to link to
     }));
 
-    return (
+    return (<>
+            <NavBar></NavBar>
         <Container className="results-container">
            
             <h2>Article Bias Results</h2>
@@ -168,6 +170,8 @@ const Results = () => {
             </Button>
         
         </Container>
+    </>
+
     );
 };
 
