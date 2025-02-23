@@ -1,10 +1,10 @@
-import "/text_bias.css";
+import "./TextBias.css";
 import { useState } from 'react';
 import { motion } from "framer-motion";
 import { Row, Col, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function text_bias(){
+function TextBias(){
     const [userText, setUserText] = useState("");
 
     const handleSubmitText = async (e) => {
@@ -13,13 +13,14 @@ function text_bias(){
             const response = await fetch(`http://127.0.0.1:8000/api/analyze-text`, {
                 method: "POST",
                 body: JSON.stringify({
-                    text: userText.value
+                    text: userText.valueOf
                   }),
                 headers: {
                     "Content-Type": "application/json"
                 }
             });
             const data = await response.json();
+            
             console.log(data);
         } catch (er) {
             console.log("Error fetching data:", er);
@@ -49,24 +50,15 @@ function text_bias(){
             </Col>
         </Row>
         <Row>
-            <motion.h3
-            initial={{ opacity: 0, y: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1 }}
-                    className="subtitle mb-0"
-            >
-                Search for an article using a url or keyword.
-            </motion.h3>
             <Col>
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
-                    className="url"
                 >            
                     <form className="">
                         <textarea
-                            cols="50"
+                            
                             type="text"
                             value={userText}
                             placeholder="Enter your text here"
@@ -83,9 +75,14 @@ function text_bias(){
                         </Button>
                     </form>
                 </motion.div>
+                <div className="results">
+                    <p>results should go here</p>
+                </div>
             </Col>
         </Row>
     </div>
     </>
 
 }
+
+export default TextBias;
