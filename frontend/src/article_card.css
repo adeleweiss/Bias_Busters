@@ -2,23 +2,44 @@
     margin-left: 3em;
     margin-right: 3em;
     border-radius: 4px;
+    text-overflow: hidden;
     background-color: #D9D9D9;
+    height: 216px;
     gap: 5px;
+}
+
+.card_all_text{
+    justify-content:stretch;
+}
+
+.card_photo{
+    /* height: 100px; */
+    padding: 10%;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .card_title{
     color: black;
     text-align: left;
+    /* overflow: "hidden"; */
+    text-overflow: ellipsis;
     margin-left: 5px;
     margin-right: 5px;
     font-weight: 600;
     font-size: x-large;
+    height: 50px;
     width: fit-content;
+    /* height: 4.5em; Adjust based on line height */
+    line-height: 1.5em;
 }
 
 .card_description{
     color: black;
     text-align: left;
+    text-overflow: ellipsis;
+    /* height: 50px; */
     margin-left: 5px;
     padding-right: 5px;
 }
@@ -26,4 +47,12 @@
 .card_bottom_content{
     margin-left: 5px;
     padding-right: 5px;
+}
+
+.source_name{
+    font-weight: 600;
+}
+
+.card_date{
+    text-align: left;
 }

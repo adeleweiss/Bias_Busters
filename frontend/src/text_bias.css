@@ -1,0 +1,33 @@
+
+.title{
+    text-align: center;
+    margin-top:0;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(4rem,8vw,8rem);
+    font-weight: 1000;
+    color: white;
+    margin-bottom:0;
+}
+
+.subtitle{
+    margin-top:0;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(1.25rem,2vw,2rem);
+    font-weight: 900;
+    color: white;
+}
+
+.fullscreen-section {
+    height: 100vh; /* Full viewport height */
+    width: 100%;
+    display: inline-block;
+    background-color: #2E3A66;
+}
+
+button{
+    font-size:clamp(1rem,1.5vw,1.5rem);
+    margin-right: 2em;
+    width:clamp(11rem,12vw,12em);
+    margin-top:2em;
+} 
