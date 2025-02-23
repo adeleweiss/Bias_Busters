@@ -34,7 +34,7 @@ function Home() {
 
     const handleSubmitKeyUrl = async (e) => {
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/analyze?url=${e}`, {
+            const response = await fetch(`/api/analyze?url=${e}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
