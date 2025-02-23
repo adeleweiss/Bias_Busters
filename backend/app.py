@@ -111,7 +111,7 @@ def analyze_article():
         "title": article_data["title"],
         "published_date": article_data["published_date"],
         "authors": article_data["authors"],
-        "keywords": article_data["keywords"],
+        "keywords": article_data["keywords"][:5],
         "title_sentiment": title_score,
         "text_sentiment": text_score,
         "total_sentiment": total_sentiment,
@@ -120,6 +120,34 @@ def analyze_article():
         "total_score": total_score,
         "political_bias": political_bias,
         "article_text_excerpt": article_data["text"][:500]  # First 500 characters
+    })
+
+# New route for analyzing raw text (instead of a URL)
+@app.route("/api/analyze-text", methods=["POST"])
+# @cross_origin(origins=["http://localhost:3000"])  # Allow CORS
+def analyze_text():
+    # Get the text from the request body (make sure it's a POST request)
+    data = request.get_json()
+    text = data.get("text", None)
+
+    if not text:
+        return jsonify({"error": "Missing 'text' parameter"}), 400
+    
+    # Get sentiment scores for the text
+    title_score = TextBlob(text).sentiment.polarity 
+    total_sentiment, total_score = analyze_sentiment([title_score])  # Using title as text
+    vader_sentiment, vader_score = analyze_sentiment_vader([text])
+
+    # Classify political bias of the text
+    political_bias = classify_political_bias(text)
+
+    # Return the sentiment and political bias data as JSON response
+    return jsonify({
+        "total_sentiment": total_sentiment,
+        "total_score": total_score,
+        "vader_text_sentiment": vader_sentiment,
+        "vader_score": vader_score,
+        "political_bias": political_bias,
     })
 
 # Start the Flask app
