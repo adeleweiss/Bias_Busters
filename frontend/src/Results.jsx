@@ -5,7 +5,6 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 import "./Results.css";
 import { useNavigate } from 'react-router-dom';
 import ArticleContext from './ArticleContext';
-import NavBar from "./NavBar";
 import Card from './ArticleCard';
 
 const Results = () => {
