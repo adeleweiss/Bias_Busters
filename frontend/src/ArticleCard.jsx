@@ -1,4 +1,4 @@
-import "./article_card.css";
+import "./ArticleCard.css";
 import { useState } from 'react';
 import { Container, Row, Col, Button, Card, Image } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
