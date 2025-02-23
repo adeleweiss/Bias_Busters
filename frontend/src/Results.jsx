@@ -5,6 +5,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 import "./Results.css";
 import { useNavigate } from 'react-router-dom';
 import ArticleContext from './ArticleContext';
+import NavBar from "./NavBar";
 import Card from './ArticleCard';
 
 const Results = () => {
@@ -29,21 +30,42 @@ const Results = () => {
         }
     };
 
-    // Fetch sentiment and political bias for each article
+    // Load cache from localStorage on page load
+    const loadCache = () => {
+        const storedCache = localStorage.getItem("articleCache");
+        return storedCache ? new Map(JSON.parse(storedCache)) : new Map();
+    };
+
+    // Save cache to localStorage whenever an article is analyzed
+    const saveCache = () => {
+        localStorage.setItem("articleCache", JSON.stringify([...articleCache]));
+    };
+
+    // Use localStorage cache in your app
+    const articleCache = loadCache();
+
     const analyzeArticle = async (url) => {
+        if (articleCache.has(url)) {
+            console.log("Returning cached result for:", url);
+            return articleCache.get(url);
+        }
+
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/analyze?url=${url}`, {
                 method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
             });
             const data = await response.json();
-            return {
+
+            const result = {
                 url,
-                sentiment: ((data.vader_score + 1) / 2) * 100,
+                sentiment: ((data?.vader_score + 1) / 2) * 100,
                 politicalBias: politicalBias[data?.political_bias] || 50,
             };
+            articleCache.set(url, result);
+            saveCache(); // Save to localStorage
+
+            return result;
         } catch (error) {
             console.error("Error analyzing article:", error);
             return null;
@@ -97,7 +119,8 @@ const Results = () => {
         url: score.url,           // URL to link to
     }));
     console.log(data);
-    return (
+    return (<>
+            <NavBar></NavBar>
         <div className="background">
              <Card className="sent-card" props={data}/>
         <div className="results-container">
@@ -148,8 +171,33 @@ const Results = () => {
                 <ResponsiveContainer width="100%" height={400}>
                     <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                         <CartesianGrid />
-                        <XAxis type="number" dataKey="x" name="Political Bias" unit="%" />
-                        <YAxis type="number" dataKey="y" name="Sentimental Bias" unit="%" />
+                        
+                        {/* X-Axis: Political Bias */}
+                        <XAxis 
+                            type="number" 
+                            dataKey="x" 
+                            name="Political Bias" 
+                            domain={[0, 100]} 
+                            tickFormatter={(value) => {
+                                const labels = ["Left", "Left Lean", "Center", "Right Lean", "Right"];
+                                const index = Math.round(value / 25);  // Convert 0-100 scale to 5 labels
+                                return labels[index];
+                            }} 
+                        />
+                        
+                        {/* Y-Axis: Sentimental Bias */}
+                        <YAxis 
+                            type="number" 
+                            dataKey="y" 
+                            name="Sentimental Bias" 
+                            domain={[0, 100]} 
+                            tickFormatter={(value) => {
+                                const labels = ["Very Negative", "Slightly Negative", "Neutral", "Slightly Positive", "Very Positive"];
+                                const index = Math.round(value / 25);  // Convert 0-100 scale to 5 labels
+                                return labels[index];
+                            }} 
+                        />
+
                         <Tooltip cursor={{ strokeDasharray: "3 3" }} content={({ payload }) => {
                             if (payload && payload.length > 0) {
                                 const { url } = payload[0].payload;
@@ -161,6 +209,7 @@ const Results = () => {
                             }
                             return null;
                         }} />
+                        
                         <Scatter name="Articles" data={chartData} fill="#8884d8" />
                         <Legend />
                     </ScatterChart>
@@ -169,6 +218,7 @@ const Results = () => {
             </Col>
             </Row>
             
+
         
         </div>
         <Row className="home-button">
@@ -177,6 +227,8 @@ const Results = () => {
             </Button>
         </Row>
         </div>
+
+    </>
 
     );
 };

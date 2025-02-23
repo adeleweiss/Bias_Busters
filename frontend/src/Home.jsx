@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from './ArticleCard';
 import ArticleContext from './ArticleContext';
 import NavBar from './NavBar';
+import { useCallback } from 'react';
 
 function Home() {
     const [url, setUrl] = useState("");
@@ -15,6 +16,9 @@ function Home() {
     const [data, setData] = useContext(ArticleContext);
     const [showButton, setShowButton] = useState(false);
     const navigate = useNavigate();
+
+    //const [choiceWord, setChoiceWord] = useState("");
+    const choiceWordArray = ["U.S", "World", "Health", "Buisness", "Art", "Sports", "Politics"]
 
     const handleSubmitUrl = async (e) => {
         e.preventDefault();
@@ -50,7 +54,6 @@ function Home() {
     };
 
     const handleSubmitKeyWord = async (e) => {
-        e.preventDefault();
         const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=281e38068b43403e9b7869cfca993a41`, {
             mode: "cors"
         });
@@ -81,6 +84,11 @@ function Home() {
           behavior: "smooth",
         });
       };
+
+    const handleUpdateKeyWordFromChoice = (givenWord) => {
+        setKeyword(givenWord);
+        // handleSubmitKeyWord(givenWord);
+    };
 
     return (
         <>
@@ -183,6 +191,13 @@ function Home() {
                             </form>
                         </motion.div>
                     </Col>
+                    <div className="keyword-options">
+                        {choiceWordArray.map(word => (
+                            <Button className="w-auto px-2" key={word} 
+                                onClick={() => handleUpdateKeyWordFromChoice(word)}
+                            >{word}</Button>
+                        ))}
+                    </div>
                 {results.length !== 0 && (
                 <motion.div 
                     className='resultsIndicator '
