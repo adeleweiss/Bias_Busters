@@ -9,8 +9,6 @@ from flask_cors import cross_origin
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
 
-article_cache = {}
-
 # Sentiment Analysis function
 def analyze_sentiment(title_text_scores):
     total_score = sum(title_text_scores) / len(title_text_scores)
@@ -72,12 +70,6 @@ def analyze_article():
     url = request.args.get("url")
     if not url:
         return jsonify({"error": "Missing 'url' parameter"}), 400
-    
-    # 1. Check if results are already in cache
-    if url in article_cache:
-        print("Returning cached result for:", url)
-        return jsonify(article_cache[url])
-    
     
     # Fetch the article using Newspaper3k
     article = newspaper.Article(url, language='en')

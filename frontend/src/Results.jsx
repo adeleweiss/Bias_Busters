@@ -74,7 +74,7 @@ const Results = () => {
     // Function to analyze the first 5 articles and store the scores
     const analyzeAllArticles = async () => {
         const articleScores = [];
-        for (let i = 0; i < Math.min(5, results.length); i++) {
+        for (let i = 0; i < Math.min(10, results.length); i++) {
             const article = results[i];
             if (article.urlToImage !== null) {
                 const score = await analyzeArticle(article.url);
@@ -219,7 +219,7 @@ const Results = () => {
         
         </div>
         <Row className="justify-content-center">
-            <Button className="home-button" onClick={()=> window.open(data.props.url, "_blank")}>
+            <Button className="home-button" onClick={()=> navigate("/")}>
                     Try a different article?
             </Button>
         </Row>
