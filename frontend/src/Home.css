@@ -90,6 +90,14 @@
     margin:2em;
 }
 
+.Keywords{
+    color:white;
+    font-family: "Times New Roman", Times, serif;
+    justify-content: center;
+    text-align: center;
+    margin-top:2em;
+}
+
 .keyword-options{
     margin: 0;
     position: absolute;

@@ -181,6 +181,13 @@ function Home() {
                             </form>
                         </motion.div>
                     </Col>
+                    </Row>
+                    <Row >
+                        <Col >
+                    <p className="Keywords">Trouble finding articles? Try these Keywords: U.S, World, Health, Business, Art, Sports, Politics</p>
+                    </Col>
+                    </Row>
+                <Row>
                 {results.length !== 0 && (
                 <motion.div 
                     className='resultsIndicator '
