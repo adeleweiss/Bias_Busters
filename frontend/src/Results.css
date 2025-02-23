@@ -21,8 +21,13 @@
 }
 
 .home-button{
-    width:auto;
+    width:15em;
     margin:0;
+    margin-left: 4em;
+    margin-top:2em;
+}
+.Desc{
+    margin-top:2em;
 }
 
 .bias-section {

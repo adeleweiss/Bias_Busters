@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from './ArticleCard';
 import ArticleContext from './ArticleContext';
-import NavBar from './NavBar';
-import { useCallback } from 'react';
 
 function Home() {
     const [url, setUrl] = useState("");
@@ -16,9 +14,6 @@ function Home() {
     const [data, setData] = useContext(ArticleContext);
     const [showButton, setShowButton] = useState(false);
     const navigate = useNavigate();
-
-    //const [choiceWord, setChoiceWord] = useState("");
-    const choiceWordArray = ["U.S", "World", "Health", "Buisness", "Art", "Sports", "Politics"]
 
     const handleSubmitUrl = async (e) => {
         e.preventDefault();
@@ -54,7 +49,8 @@ function Home() {
     };
 
     const handleSubmitKeyWord = async (e) => {
-        const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=281e38068b43403e9b7869cfca993a41`, {
+        e.preventDefault();
+        const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=e087a53010b042798763d14eb30e22c1`, {
             mode: "cors"
         });
         const json = await response.json();
@@ -85,14 +81,8 @@ function Home() {
         });
       };
 
-    const handleUpdateKeyWordFromChoice = (givenWord) => {
-        setKeyword(givenWord);
-        // handleSubmitKeyWord(givenWord);
-    };
-
     return (
         <>
-            <NavBar></NavBar>
             <div className="fullscreen-section">
                 <Row>
                     <Col className="align-self-start">
@@ -110,9 +100,9 @@ function Home() {
                         >
                             <p className="subtitle">Who you gonna trust?</p>
                         </motion.div>
-                        
+
                     </Col>
-                
+
                     <motion.div
                                 initial={{ opacity: 0, y: 0 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -120,7 +110,7 @@ function Home() {
                     >
                     <p className="description">Have you ever felt overwhelmed by a flood of news articles, unsure which ones to trust? We’re here to help. We designed Bias Busters to be an accessible online platform that automatically analyzes the sentiment and political bias in articles. Our mission is to promote critical thinking and foster a more open-minded society, one article at a time.</p>
                     </motion.div>
-                
+
                 </Row>
                 <Row>
                     <motion.h3
@@ -155,7 +145,7 @@ function Home() {
                                     className="textbox-input"
                                     disabled={keyword}
                                 />
-                                
+
                             </form>
                         </motion.div>
                     </Col>
@@ -168,7 +158,7 @@ function Home() {
                             transition={{ duration: 1 , delay: 0.5}}
                             className="url"
                         >
-                            
+
                             <form onSubmit={handleSubmitKeyWord} className="">
                                 <Button
                                         variant="light"
@@ -187,17 +177,17 @@ function Home() {
                                     className="textbox-input"
                                     disabled={url}
                                 />
-                                
+
                             </form>
                         </motion.div>
                     </Col>
-                    <div className="keyword-options">
-                        {choiceWordArray.map(word => (
-                            <Button className="w-auto px-2" key={word} 
-                                onClick={() => handleUpdateKeyWordFromChoice(word)}
-                            >{word}</Button>
-                        ))}
-                    </div>
+                    </Row>
+                    <Row >
+                        <Col >
+                    <p className="Keywords">Trouble finding articles? Try these Keywords: U.S, World, Health, Business, Art, Sports, Politics</p>
+                    </Col>
+                    </Row>
+                <Row>
                 {results.length !== 0 && (
                 <motion.div 
                     className='resultsIndicator '
@@ -212,7 +202,7 @@ function Home() {
                         <p className='text-center'>⌄ Scroll Down for Results ⌄</p>
                     </motion.div>
                 </motion.div>
-                
+
             )}
                 </Row>
             </div>

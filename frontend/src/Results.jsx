@@ -5,7 +5,6 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 import "./Results.css";
 import { useNavigate } from 'react-router-dom';
 import ArticleContext from './ArticleContext';
-import NavBar from "./NavBar";
 import Card from './ArticleCard';
 
 const Results = () => {
@@ -18,7 +17,7 @@ const Results = () => {
     const handleSubmitKeyWord = async (keyword) => {
         try {
             const response = await fetch(
-                `https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=281e38068b43403e9b7869cfca993a41`,
+                `https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=e087a53010b042798763d14eb30e22c1`,
                 {
                     mode: "cors",
                 }
@@ -75,7 +74,7 @@ const Results = () => {
     // Function to analyze the first 5 articles and store the scores
     const analyzeAllArticles = async () => {
         const articleScores = [];
-        for (let i = 0; i < Math.min(5, results.length); i++) {
+        for (let i = 0; i < Math.min(10, results.length); i++) {
             const article = results[i];
             if (article.urlToImage !== null) {
                 const score = await analyzeArticle(article.url);
@@ -112,13 +111,39 @@ const Results = () => {
     const mappedPoliticalBias = politicalBias[data?.political_bias] || 50;
     const sentimentalBias = ((data?.vader_score + 1) / 2) * 100 || 50;
 
-    // Prepare data for the chart
+    const summarizePoliticalBias = {
+        "left": "left",
+        "lean left": "left leaning", 
+        "lean right": "right leaning",
+        "right": "right", 
+        "center": "center"
+    }
+
+    const summarizedPoliticalBias = summarizePoliticalBias[data?.political_bias]
+
+    const summarizeVaderSentiment = (score) => {
+        if (score > 0.5) {
+            return "very positive";
+        } else if (score > 0.2) {
+            return "slightly positive";
+        } else if (score >= -0.2 && score <= 0.2) {
+            return "neutral";
+        } else if (score < -0.2 && score >= -0.5) {
+            return "slightly negative";
+        } else {
+            return "very negative";
+        }
+    };
+
+    const summarizedVaderSentiment = summarizeVaderSentiment(data?.vader_score)
+
     const chartData = articleScores.map((score) => ({
         x: score.politicalBias,  // Political bias (x-axis)
         y: score.sentiment,       // Sentiment bias (y-axis)
         url: score.url,           // URL to link to
     }));
-    return ( <>
+    console.log(data);
+    return (<>
         <div className="background">
              <Card className="sent-card" props={data}/>
         <div className="results-container">
@@ -162,6 +187,12 @@ const Results = () => {
 
                 {/* Display other bias-related content here */}
             </div>
+            <p className="Desc">You're Article is {summarizedPoliticalBias} politically and expresses a {summarizedVaderSentiment} sentiment.</p>
+            <Row className="home-button justify-content-center">
+            <Button onClick={() => navigate("/")}>
+                    Try a different article?
+            </Button>
+        </Row>
             </Col>
             <Col>
             {/* Plotting the 2D Coordinate Grid */}
@@ -208,25 +239,19 @@ const Results = () => {
                             return null;
                         }} />
                         
-                        <Scatter name="Articles" data={chartData} fill="#8884d8" />
+                        <Scatter name="Similar Articles" data={chartData} fill="#8884d8" />
                         <Legend />
                     </ScatterChart>
                 </ResponsiveContainer>
             </div>
             </Col>
             </Row>
-            
-
         
-        </div>
-        <Row className="justify-content-center">
-            <Button className="home-button" onClick={()=> window.open(data.props.url, "_blank")}>
-                    Try a different article?
-            </Button>
-        </Row>
-        </div>
-
+    </div>
+    </div>
     </>
-)};
+
+    );
+};
 
 export default Results;
