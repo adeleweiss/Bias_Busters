@@ -162,6 +162,12 @@ const Results = () => {
 
                 {/* Display other bias-related content here */}
             </div>
+            <p className="Desc">You're Article is {data.political_bias} politically and expresses a {data.vader_score} sentiment</p>
+            <Row className="home-button justify-content-center">
+            <Button onClick={() => navigate("/")}>
+                    Try a different article?
+            </Button>
+        </Row>
             </Col>
             <Col>
             {/* Plotting the 2D Coordinate Grid */}
@@ -208,24 +214,16 @@ const Results = () => {
                             return null;
                         }} />
                         
-                        <Scatter name="Articles" data={chartData} fill="#8884d8" />
+                        <Scatter name="Similar Articles" data={chartData} fill="#8884d8" />
                         <Legend />
                     </ScatterChart>
                 </ResponsiveContainer>
             </div>
             </Col>
             </Row>
-            
-
         
-        </div>
-        <Row className="home-button">
-            <Button onClick={() => navigate("/")}>
-                    Try a different article?
-            </Button>
-        </Row>
-        </div>
-
+    </div>
+    </div>
     </>
 
     );
