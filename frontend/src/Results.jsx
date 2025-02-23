@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import "./Results.css";
 
 const Results = () => {
   const location = useLocation();
   const { data } = location.state || {};
 
-  // State to hold the articles fetched via keyword search
   const [results, setResults] = useState([]);
   const [articleScores, setArticleScores] = useState([]);
   
@@ -39,8 +39,8 @@ const Results = () => {
       const data = await response.json();
       return {
         url,
-        sentiment: ((data.vader_score + 1) / 2) * 100 ,
-        politicalBias: politicalBias[data?.political_bias],
+        sentiment: ((data.vader_score + 1) / 2) * 100,
+        politicalBias: politicalBias[data?.political_bias] || 50,
       };
     } catch (error) {
       console.error("Error analyzing article:", error);
@@ -49,34 +49,32 @@ const Results = () => {
   };
 
   // Function to analyze the first 5 articles and store the scores
-    const analyzeAllArticles = async () => {
-        const articleScores = [];
-        // Limit to first 5 articles
-        for (let i = 0; i < Math.min(10, results.length); i++) {
-            const article = results[i];
-            if (article.urlToImage !== null) {
-                const score = await analyzeArticle(article.url);
-                if (score) {
-                articleScores.push(score);
-                }
-            }
+  const analyzeAllArticles = async () => {
+    const articleScores = [];
+    for (let i = 0; i < Math.min(5, results.length); i++) {
+      const article = results[i];
+      if (article.urlToImage !== null) {
+        const score = await analyzeArticle(article.url);
+        if (score) {
+          articleScores.push(score);
         }
-        setArticleScores(articleScores);
-    };
-  // Call the keyword search when the component mounts (or when data changes)
+      }
+    }
+    setArticleScores(articleScores);
+  };
+
   useEffect(() => {
     if (data && data.keywords && data.keywords[0]) {
       handleSubmitKeyWord(data.keywords[0]);
     }
   }, [data]);
-  
-  // Call analyzeAllArticles after results are fetched
+
   useEffect(() => {
     if (results.length > 0) {
       analyzeAllArticles();
     }
   }, [results]);
-  
+
   // Define political bias mapping
   const politicalBias = {
     left: 10,
@@ -90,10 +88,18 @@ const Results = () => {
   const mappedPoliticalBias = politicalBias[data?.political_bias] || 50;
   const sentimentalBias = ((data?.vader_score + 1) / 2) * 100 || 50;
 
+  // Prepare data for the chart
+  const chartData = articleScores.map((score) => ({
+    x: score.politicalBias,  // Political bias (x-axis)
+    y: score.sentiment,       // Sentiment bias (y-axis)
+    url: score.url,           // URL to link to
+  }));
+
   return (
     <Container className="results-container">
       <h2>Article Bias Results</h2>
 
+      {/* Other content such as bias bars and results list */}
       <div className="bias-section">
         {/* Political Bias Bar */}
         <p>
@@ -127,36 +133,31 @@ const Results = () => {
           <span>Positive</span>
         </div>
 
-
-        {/* Display keyword search results */}
-        <div className="results-list">
-            {results && results.length > 0 ? (
-            results
-              .filter((article) => article.urlToImage !== null)
-              .slice(0, 5)
-              .map((article, index) => {
-                const score = articleScores.find(
-                  (score) => score.url === article.url
-                );
-
-                return (
-                  <div key={index} className="article">
-                    <p>{article.url}</p>
-                    {score && (
-                      <div>
-                        <p>Sentiment Score: {score.sentiment}</p>
-                        <p>Political Bias: {score.politicalBias}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })
-          ) : (
-            <p>No keyword articles found</p>
-            )}
+        {/* Display other bias-related content here */}
       </div>
 
-        
+      {/* Plotting the 2D Coordinate Grid */}
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={400}>
+          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+            <CartesianGrid />
+            <XAxis type="number" dataKey="x" name="Political Bias" unit="%" />
+            <YAxis type="number" dataKey="y" name="Sentimental Bias" unit="%" />
+            <Tooltip cursor={{ strokeDasharray: "3 3" }} content={({ payload }) => {
+              if (payload && payload.length > 0) {
+                const { url } = payload[0].payload;
+                return (
+                  <div>
+                    <p><strong>Article URL:</strong> <a href={url} target="_blank" rel="noopener noreferrer">{url}</a></p>
+                  </div>
+                );
+              }
+              return null;
+            }} />
+            <Scatter name="Articles" data={chartData} fill="#8884d8" />
+            <Legend />
+          </ScatterChart>
+        </ResponsiveContainer>
       </div>
     </Container>
   );
