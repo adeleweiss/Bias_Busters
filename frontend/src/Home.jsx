@@ -17,7 +17,7 @@ function Home() {
     const [showButton, setShowButton] = useState(false);
     const navigate = useNavigate();
 
-    const [choiceWord, setChoiceWord] = useState("");
+    //const [choiceWord, setChoiceWord] = useState("");
     const choiceWordArray = ["U.S", "World", "Health", "Buisness", "Art", "Sports", "Politics"]
 
     const handleSubmitUrl = async (e) => {
@@ -54,7 +54,6 @@ function Home() {
     };
 
     const handleSubmitKeyWord = async (e) => {
-        e.preventDefault();
         const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=281e38068b43403e9b7869cfca993a41`, {
             mode: "cors"
         });
@@ -86,10 +85,10 @@ function Home() {
         });
       };
 
-    const handleUpdateKeyWordFromChoice = useCallback((givenWord) => {
+    const handleUpdateKeyWordFromChoice = (givenWord) => {
         setKeyword(givenWord);
-        handleSubmitKeyWord();
-    });
+        // handleSubmitKeyWord(givenWord);
+    };
 
     return (
         <>
@@ -192,7 +191,7 @@ function Home() {
                             </form>
                         </motion.div>
                     </Col>
-                    <div>
+                    <div className="keyword-options">
                         {choiceWordArray.map(word => (
                             <Button className="w-auto px-2" key={word} 
                                 onClick={() => handleUpdateKeyWordFromChoice(word)}
