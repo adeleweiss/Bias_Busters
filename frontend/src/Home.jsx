@@ -50,7 +50,7 @@ function Home() {
 
     const handleSubmitKeyWord = async (e) => {
         e.preventDefault();
-        const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=281e38068b43403e9b7869cfca993a41`, {
+        const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&sortBy=popularity&apiKey=e087a53010b042798763d14eb30e22c1`, {
             mode: "cors"
         });
         const json = await response.json();
