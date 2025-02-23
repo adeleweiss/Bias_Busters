@@ -5,6 +5,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 import "./Results.css";
 import { useNavigate } from 'react-router-dom';
 import ArticleContext from './ArticleContext';
+import NavBar from "./NavBar";
 import Card from './ArticleCard';
 
 const Results = () => {
@@ -118,7 +119,8 @@ const Results = () => {
         url: score.url,           // URL to link to
     }));
     console.log(data);
-    return (
+    return (<>
+            <NavBar></NavBar>
         <div className="background">
              <Card className="sent-card" props={data}/>
         <div className="results-container">
@@ -225,6 +227,8 @@ const Results = () => {
             </Button>
         </Row>
         </div>
+
+    </>
 
     );
 };
