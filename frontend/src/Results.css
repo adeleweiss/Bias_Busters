@@ -2,12 +2,27 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    max-width: 800px;
-    margin: auto;
+    background-color:white;
+    margin:2em;
+    font-family: "Times New Roman", Times, serif;
+    box-shadow: 0.2em 0.2em 0.5em rgb(160, 160, 160)
+}
+
+.card{
+    box-shadow: 0.2em 0.2em 0.5em rgb(160, 160, 160);
+}
+
+.background{
+    background-color: #2E3A66;
+    height: 100vh; /* Full viewport height */
+    width: 100%;
+    display: inline-block;
+    background-color: #2E3A66;
 }
 
 .home-button{
-    width:auto;
+    align-items: center;
+    width:10em;
     padding:0.75em;
     margin:0;
 }
