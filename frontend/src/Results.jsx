@@ -117,7 +117,8 @@ const Results = () => {
         y: score.sentiment,       // Sentiment bias (y-axis)
         url: score.url,           // URL to link to
     }));
-    return ( <>
+    console.log(data);
+    return (<>
         <div className="background">
              <Card className="sent-card" props={data}/>
         <div className="results-container">
@@ -218,14 +219,16 @@ const Results = () => {
 
         
         </div>
-        <Row className="justify-content-center">
-            <Button className="home-button" onClick={()=> navigate("/")}>
+        <Row className="home-button">
+            <Button onClick={() => navigate("/")}>
                     Try a different article?
             </Button>
         </Row>
         </div>
 
     </>
-)};
+
+    );
+};
 
 export default Results;
