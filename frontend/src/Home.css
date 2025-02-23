@@ -33,6 +33,25 @@
     background-color: #2E3A66;
 }
 
+.backTop{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width:2.5em;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+.backtop:hover{
+    transform: scale(1.05);
+}
+
 .url{
     text-align: center;
 }
@@ -43,6 +62,11 @@
     width:clamp(11rem,12vw,12em);
     margin-top:0em!important;
 } 
+
+.length-Res{
+    margin:1em;
+    color:rgb(148, 146, 146);
+}
 
 .textbox-input{
     padding-left: 1em;
@@ -58,6 +82,7 @@
     font-family: "Times New Roman", Times, serif;
     align-items: center;
     position: fixed;
+    font-size: 1.2em;
     bottom: 2em;
 }
 
