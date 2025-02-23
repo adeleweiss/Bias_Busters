@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from './ArticleCard';
 import ArticleContext from './ArticleContext';
+import NavBar from './NavBar';
 
 function Home() {
     const [url, setUrl] = useState("");
@@ -83,6 +84,7 @@ function Home() {
 
     return (
         <>
+            <NavBar></NavBar>
             <div className="fullscreen-section">
                 <Row>
                     <Col className="align-self-start">
