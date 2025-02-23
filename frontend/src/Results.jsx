@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Row, Button } from "react-bootstrap";
+import { Container, Row, Button, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import "./Results.css";
 import { useNavigate } from 'react-router-dom';
 import ArticleContext from './ArticleContext';
+import Card from './ArticleCard';
 
 const Results = () => {
     const [data, setData] = useContext(ArticleContext);
@@ -116,13 +117,16 @@ const Results = () => {
         y: score.sentiment,       // Sentiment bias (y-axis)
         url: score.url,           // URL to link to
     }));
-
+    console.log(data);
     return (
-        <Container className="results-container">
-           
+        <div className="background">
+             <Card className="sent-card" props={data}/>
+        <div className="results-container">
             <h2>Article Bias Results</h2>
-            
+            <Row>
+           
             {/* Other content such as bias bars and results list */}
+            <Col>
             <div className="bias-section">
                 {/* Political Bias Bar */}
                 <p>
@@ -158,7 +162,8 @@ const Results = () => {
 
                 {/* Display other bias-related content here */}
             </div>
-
+            </Col>
+            <Col>
             {/* Plotting the 2D Coordinate Grid */}
             <div className="chart-container">
                 <ResponsiveContainer width="100%" height={400}>
@@ -208,14 +213,19 @@ const Results = () => {
                     </ScatterChart>
                 </ResponsiveContainer>
             </div>
-
+            </Col>
+            </Row>
+            
 
         
-            <Button className="home-button" onClick={() => navigate("/")}>
-                Try a different article?
+        </div>
+        <Row className="home-button">
+            <Button onClick={() => navigate("/")}>
+                    Try a different article?
             </Button>
-        
-        </Container>
+        </Row>
+        </div>
+
     );
 };
 
