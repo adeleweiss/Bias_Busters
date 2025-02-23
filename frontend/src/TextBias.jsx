@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { motion } from "framer-motion";
 import { Row, Col, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from "./NavBar";
 
 function TextBias(){
     const [userText, setUserText] = useState("");
@@ -30,7 +29,6 @@ function TextBias(){
 
     return <>
     <div className="fullscreen-section">
-        <NavBar></NavBar>
         <Row>
             <Col className="align-self-start">
                 <motion.div
