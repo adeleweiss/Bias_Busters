@@ -111,7 +111,32 @@ const Results = () => {
     const mappedPoliticalBias = politicalBias[data?.political_bias] || 50;
     const sentimentalBias = ((data?.vader_score + 1) / 2) * 100 || 50;
 
-    // Prepare data for the chart
+    const summarizePoliticalBias = {
+        "left": "left",
+        "lean left": "left leaning", 
+        "lean right": "right leaning",
+        "right": "right", 
+        "center": "center"
+    }
+
+    const summarizedPoliticalBias = summarizePoliticalBias[data?.political_bias]
+
+    const summarizeVaderSentiment = (score) => {
+        if (score > 0.5) {
+            return "very positive";
+        } else if (score > 0.2) {
+            return "slightly positive";
+        } else if (score >= -0.2 && score <= 0.2) {
+            return "neutral";
+        } else if (score < -0.2 && score >= -0.5) {
+            return "slightly negative";
+        } else {
+            return "very negative";
+        }
+    };
+
+    const summarizedVaderSentiment = summarizeVaderSentiment(data?.vader_score)
+
     const chartData = articleScores.map((score) => ({
         x: score.politicalBias,  // Political bias (x-axis)
         y: score.sentiment,       // Sentiment bias (y-axis)
@@ -162,7 +187,7 @@ const Results = () => {
 
                 {/* Display other bias-related content here */}
             </div>
-            <p className="Desc">You're Article is {data.political_bias} politically and expresses a {data.vader_score} sentiment</p>
+            <p className="Desc">You're Article is {summarizedPoliticalBias} politically and expresses a {summarizedVaderSentiment} sentiment.</p>
             <Row className="home-button justify-content-center">
             <Button onClick={() => navigate("/")}>
                     Try a different article?
