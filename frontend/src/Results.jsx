@@ -50,7 +50,7 @@ const Results = () => {
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/analyze?url=${url}`, {
+            const response = await fetch(`biasbusters-production.up.railway.app/analyze?url=${url}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });

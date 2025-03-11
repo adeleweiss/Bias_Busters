@@ -10,7 +10,7 @@ function TextBias(){
     const handleSubmitText = async (e) => {
         e.preventDefault();
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/analyze-text`, {
+            const response = await fetch(`biasbusters-production.up.railway.app/analyze-text`, {
                 method: "POST",
                 body: JSON.stringify({
                     text: userText.valueOf

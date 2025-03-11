@@ -18,7 +18,7 @@ function Home() {
     const handleSubmitUrl = async (e) => {
         e.preventDefault();
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/analyze?url=${url}`, {
+            const response = await fetch(`biasbusters-production.up.railway.app/analyze?url=${url}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -34,7 +34,7 @@ function Home() {
 
     const handleSubmitKeyUrl = async (e) => {
         try{
-            const response = await fetch(`/api/analyze?url=${e}`, {
+            const response = await fetch(`biasbusters-production.up.railway.app/analyze?url=${e}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

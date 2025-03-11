@@ -1,7 +1,0 @@
-flask
-flask-cors
-newspaper3k
-textblob
-nltk
-pickle
-flask-lambda
