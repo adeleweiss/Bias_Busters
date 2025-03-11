@@ -1,0 +1,6 @@
+flask
+flask-cors
+newspaper3k
+textblob
+nltk
+flask-lambda
