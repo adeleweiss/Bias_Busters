@@ -5,3 +5,4 @@ textblob
 nltk
 flask-lambda
 lxml_html_clean
+nltk
